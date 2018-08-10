@@ -41,11 +41,14 @@ public class Divider {
         result.append(devisionResult);
 
         if (remainder != 0) {
-            char chr = String.valueOf(remainder).charAt(0);
-            String dividendSubString = String.valueOf(dividend).substring(index);
-            String dividendString = String.valueOf(chr) + dividendSubString;
-            dividend = Integer.valueOf(dividendString);
-            result.append(foo(dividend, divisor));
+            if(index<decimals){
+                char chr = String.valueOf(remainder).charAt(0);
+                String dividendSubString = String.valueOf(dividend).substring(index);
+                String dividendString = String.valueOf(chr) + dividendSubString;
+                dividend = Integer.valueOf(dividendString);
+                result.append(foo(dividend, divisor));
+            }
+
         } else if (index < decimals) {
             System.out.println(index + " " + decimals);
             while (index < decimals) {

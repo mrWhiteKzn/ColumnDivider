@@ -5,7 +5,6 @@ public class Main {
         Divider divider = new Divider();
         int dividend = -115;
         int divisor = 50;
-        System.out.println("____________");
-        System.out.println("Итоговый результат: " +divider.showDividing(dividend, divisor));
+        System.out.println(divider.showDividing(dividend,divisor));
     }
 }

@@ -50,8 +50,22 @@ public class DividerTest {
 
     @Test
     public void whenDevideWithDivisorLessThanDividend(){
-        int actual = divider.showDividing(5,10);
+        int actual = divider.showDividing(5,9);
         int expected = 0;
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void whenDevideWithDivisorConsistsMoreThanOneCharacter(){
+        int actual = divider.showDividing(115,50);
+        int expected = 2;
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void whenDevideWithDivisorConsistsMoreThanTwoCharacter(){
+        int actual = divider.showDividing(1150,100);
+        int expected = 11;
         assertEquals(expected,actual);
     }
 }
