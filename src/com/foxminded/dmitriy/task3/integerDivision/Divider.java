@@ -48,17 +48,30 @@ public class Divider {
             return;
         }
         if (!secondBlockWritten) {
-            StringBuilder stringToPrint = new StringBuilder();
             StringBuilder freeSpaces = new StringBuilder();
             for (int i = 0; i < position; i++) {
                 freeSpaces.append(" ");
             }
+
+            StringBuilder stringToPrint = new StringBuilder();
             stringToPrint.append(dividend);
             stringToPrint.append("  |"+ "‐‐‐‐‐‐");
-            System.out.println(freeSpaces.append(stringToPrint));
-            System.out.print("‐");
+            System.out.print(freeSpaces);
+            System.out.println(stringToPrint);
+            System.out.print(freeSpaces);
+            for(int i =0; i< String.valueOf(dividend).length();i++){
+                System.out.print("‐");
+            }
             secondBlockWritten = true;
+            position++;
+            return;
         }
+
+        StringBuilder freeSpaces = new StringBuilder();
+        for (int i = 0; i < position; i++) {
+            freeSpaces.append(" ");
+        }
+        System.out.print(freeSpaces);
     }
 
     private int getStartPosition(String stringToLevel) {
