@@ -6,6 +6,7 @@ public class Divider {
     private int decimals;
     private int dividend;
     private int divisor;
+    private int result;
     private boolean firstBlockWritten;
     private boolean secondBlockWritten;
     String stringToLevel;
@@ -19,7 +20,9 @@ public class Divider {
         if ((dividend >= 0 && divisor > 0) || (dividend <= 0 && divisor < 0)) {
             negativeFlag = false;
         }
-        printDetails(dividend);
+        this.divisor = divisor;
+        result = dividend / divisor;
+        printDetails(dividend, dividend);
 
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
@@ -32,6 +35,7 @@ public class Divider {
         decimals = String.valueOf(dividend).length();
 
         String result = foo(dividend, divisor);
+        printDetails(0, dividend % divisor);
 
         int quotient = Integer.parseInt(result);
         if (!negativeFlag)
@@ -39,7 +43,7 @@ public class Divider {
         return -quotient;
     }
 
-    private void printDetails(int dividend) {
+    private void printDetails(int numberToDiv, int dividend) {
         if (!firstBlockWritten) {
             stringToLevel = " _" + dividend + "|" + this.divisor;
             position = getStartPosition(stringToLevel);
@@ -55,23 +59,49 @@ public class Divider {
 
             StringBuilder stringToPrint = new StringBuilder();
             stringToPrint.append(dividend);
-            stringToPrint.append("  |"+ "‐‐‐‐‐‐");
+            stringToPrint.append("  |" + "‐‐‐‐‐‐");
             System.out.print(freeSpaces);
             System.out.println(stringToPrint);
             System.out.print(freeSpaces);
-            for(int i =0; i< String.valueOf(dividend).length();i++){
+            for (int i = 0; i < String.valueOf(dividend).length(); i++) {
                 System.out.print("‐");
             }
+            System.out.print(freeSpaces);
+            System.out.println(result);
             secondBlockWritten = true;
             position++;
             return;
         }
 
         StringBuilder freeSpaces = new StringBuilder();
-        for (int i = 0; i < position; i++) {
+        for (int i = 1; i < position; i++) {
             freeSpaces.append(" ");
         }
+
+        if (numberToDiv == 0) {
+            System.out.print(freeSpaces + " ");
+            System.out.println(dividend);
+            return;
+        }
+
         System.out.print(freeSpaces);
+        System.out.println("_" + numberToDiv);
+        System.out.print(freeSpaces.append(" "));
+        System.out.println(dividend);
+
+        StringBuilder deletemeterString = new StringBuilder();
+        deletemeterString.append(freeSpaces);
+        for (int i = 0; i < String.valueOf(dividend).length(); i++) {
+            deletemeterString.append("‐");
+//            System.out.print("‐");
+        }
+        System.out.println(deletemeterString);
+        movePosition();
+    }
+
+    private void movePosition() {
+        for (int i = 0; i < String.valueOf(divisor).length(); i++)
+            position++;
     }
 
     private int getStartPosition(String stringToLevel) {
@@ -98,7 +128,7 @@ public class Divider {
 
         int devisionResult = numberToDiv / divisor;
         result.append(devisionResult);
-        printDetails(devisionResult * divisor);
+        printDetails(numberToDiv, devisionResult * divisor);
 
         int remainder = numberToDiv % divisor;
         if (remainder != 0) {
@@ -117,6 +147,7 @@ public class Divider {
                 index++;
             }
         }
+
         return result.toString();
     }
 
