@@ -39,7 +39,6 @@ public class Divider {
             return 0;
         }
         decimals = String.valueOf(dividend).length();
-
         result = divide(dividend, divisor);
         printDetails(0, dividend % divisor);
 
@@ -80,7 +79,6 @@ public class Divider {
                 digitIndexInDividend++;
             }
         }
-
         return Integer.parseInt(result.toString());
     }
 
