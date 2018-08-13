@@ -135,7 +135,7 @@ public class Divider {
 
         StringBuilder firstDigitsOut = new StringBuilder();
         firstDigitsOut.append(freeSpaces);
-        firstDigitsOut.append(PIPE + numberToDiv);
+        firstDigitsOut.append(MINUS + numberToDiv);
         System.out.println(firstDigitsOut);
 
         StringBuilder secondDigitsOut = new StringBuilder();
