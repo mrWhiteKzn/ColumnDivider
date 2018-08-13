@@ -14,77 +14,77 @@ public class DividerTest {
     }
 
     @Test
-    public void whenDevideOneCharacterNumber(){
+    public void whenDivideOneCharacterNumber(){
         int actual = divider.showDividing(5,5);
         int expected = 1;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithPositiveNumbers(){
+    public void whenDivideWithPositiveNumbers(){
         int actual = divider.showDividing(115,5);
         int expected = 23;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithNegativeNumbers(){
+    public void whenDivideWithNegativeNumbers(){
         int actual = divider.showDividing(-115,-5);
         int expected = 23;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithNegativeDividend(){
+    public void whenDivideWithNegativeDividend(){
         int actual = divider.showDividing(-115,5);
         int expected = -23;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithNegativeDivisor(){
+    public void whenDivideWithNegativeDivisor(){
         int actual = divider.showDividing(115,-5);
         int expected = -23;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithDividendLessThanDivisor(){
+    public void whenDivideWithDividendLessThanDivisor(){
         int actual = divider.showDividing(5,9);
         int expected = 0;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithDivisorConsistsTwoCharacter(){
+    public void whenDivideWithDivisorConsistsTwoCharacter(){
         int actual = divider.showDividing(115,50);
         int expected = 2;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithDivisorConsistsThreeCharacter(){
+    public void whenDivideWithDivisorConsistsThreeCharacter(){
         int actual = divider.showDividing(1150,100);
         int expected = 11;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithDivisorConsistsFourCharacterAndDividendIsNegative(){
+    public void whenDivideWithDivisorConsistsFourCharacterAndDividendIsNegative(){
         int actual = divider.showDividing(-11500,1001);
         int expected = -11;
         assertEquals(expected,actual);
     }
 
     @Test
-    public void whenDevideWithDivisorConsistsFiveCharacterAndDividendIsLessAndBothNegative(){
+    public void whenDivideWithDivisorConsistsFiveCharacterAndDividendIsLessAndBothNegative(){
         int actual = divider.showDividing(-1001,-10001);
         int expected = 0;
         assertEquals(expected,actual);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenDevideByZero(){
+    public void whenDivideByZero(){
         int actual = divider.showDividing(144, 0);
     }
 

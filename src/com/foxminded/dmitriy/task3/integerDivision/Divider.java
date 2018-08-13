@@ -28,7 +28,7 @@ public class Divider {
 
         this.divisor = divisor;
         result = dividend / divisor;
-        printDetails(dividend, dividend);
+        printDetails(dividend, dividend);   // wtf??
 
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
@@ -67,10 +67,10 @@ public class Divider {
         if (remainder != 0) {
             if (digitIndexInDividend < decimals) {
                 String reminder = Integer.toString(remainder);
-                String substringToDevide = String.valueOf(this.dividend).substring(digitIndexInDividend);
-                String stringToDevide = reminder + substringToDevide;
+                String substringToDivide = String.valueOf(this.dividend).substring(digitIndexInDividend);
+                String stringToDivide = reminder + substringToDivide;
 
-                dividend = Integer.valueOf(stringToDevide);
+                dividend = Integer.valueOf(stringToDivide);
                 result.append(divide(dividend, divisor));
             }
         } else if (digitIndexInDividend < decimals) {
@@ -88,54 +88,30 @@ public class Divider {
     }
     private void printDetails(int numberToDiv, int dividend) {
         if (!firstBlockWritten) {
-            firstLineOut = UNDERSCORE + dividend + PIPE + this.divisor;
-            position = getStartPosition(firstLineOut);
-            System.out.println(firstLineOut);
-            firstBlockWritten = true;
+            printFirstLine(dividend);
             return;
         }
         if (!secondBlockWritten) {
-            StringBuilder freeSpaces = new StringBuilder();
-            for (int i = 0; i < position; i++) {
-                freeSpaces.append(SPACE);
-            }
-
-            StringBuilder secondLineOut = new StringBuilder();
-            secondLineOut.append(freeSpaces);
-            secondLineOut.append(dividend);
-            addSpaces(secondLineOut, dividend);
-            secondLineOut.append(PIPE + "‐‐‐‐‐‐");
-            System.out.println(secondLineOut);  //вторая строка
-
-            StringBuilder thirdLineOut = new StringBuilder();
-            thirdLineOut.append(freeSpaces);
-            for (int i = 0; i < String.valueOf(dividend).length(); i++) {
-                thirdLineOut.append(MINUS);
-            }
-            thirdLineOut.append(freeSpaces);
-            thirdLineOut.append(result);
-            System.out.println(thirdLineOut);   // третья строка
-
-            secondBlockWritten = true;
-            position++;
+            printSecondAndThirdLine(dividend);
             return;
         }
 
-        StringBuilder freeSpaces = new StringBuilder();
-        for (int i = 0; i < position; i++) {
-            freeSpaces.append(SPACE);
-        }
-
+        StringBuilder freeSpaces = getSpacesBeforePosition(position);
         if (numberToDiv == 0) {
             StringBuilder remainder = new StringBuilder();
-            remainder.append(freeSpaces + SPACE + dividend);
+            freeSpaces.setLength(freeSpaces.length()-1);
+            remainder.append(freeSpaces);
+            remainder.append(SPACE);
+            remainder.append(dividend);
             System.out.println(remainder);
             return;
         }
 
         StringBuilder firstDigitsOut = new StringBuilder();
+        freeSpaces.setLength(freeSpaces.length()-1);
         firstDigitsOut.append(freeSpaces);
-        firstDigitsOut.append(MINUS + numberToDiv);
+        firstDigitsOut.append(UNDERSCORE);
+        firstDigitsOut.append(numberToDiv);
         System.out.println(firstDigitsOut);
 
         StringBuilder secondDigitsOut = new StringBuilder();
@@ -146,10 +122,48 @@ public class Divider {
         StringBuilder delimiterString = new StringBuilder();
         delimiterString.append(freeSpaces);
         for (int i = 0; i < String.valueOf(dividend).length(); i++) {
-            delimiterString.append("‐");
+            delimiterString.append(MINUS);
         }
         System.out.println(delimiterString);
         movePosition();
+    }
+
+    private void printFirstLine(int dividend) {
+        firstLineOut = UNDERSCORE + dividend + PIPE + this.divisor;
+        position = getStartPosition(firstLineOut);
+        System.out.println(firstLineOut);
+        firstBlockWritten = true;
+    }
+
+    private void printSecondAndThirdLine(int dividend) {
+        StringBuilder freeSpaces = getSpacesBeforePosition(position);
+        StringBuilder secondLineOut = new StringBuilder();
+        secondLineOut.append(freeSpaces);
+        secondLineOut.append(dividend);
+        addSpaces(secondLineOut, dividend);
+        secondLineOut.append(PIPE + "‐‐‐‐‐‐");
+        int index = secondLineOut.indexOf(PIPE);
+        System.out.println(secondLineOut);  //вторая строка
+
+        StringBuilder thirdLineOut = new StringBuilder();
+        thirdLineOut.append(freeSpaces);
+        for (int i = 0; i < String.valueOf(dividend).length(); i++) {
+            thirdLineOut.append(MINUS);
+        }
+        thirdLineOut.append(getSpacesBeforePosition(index-thirdLineOut.length()));
+        thirdLineOut.append(PIPE);
+        thirdLineOut.append(result);
+        System.out.println(thirdLineOut);   // третья строка
+
+        secondBlockWritten = true;
+    }
+
+    private StringBuilder getSpacesBeforePosition(int position) {
+        StringBuilder freeSpaces = new StringBuilder();
+        for (int i = 0; i < position; i++) {
+            freeSpaces.append(SPACE);
+        }
+        return freeSpaces;
     }
 
     private void addSpaces(StringBuilder stringToPrint, int subDiv) {
@@ -160,7 +174,7 @@ public class Divider {
     }
 
     private void movePosition() {
-        for (int i = 0; i < String.valueOf(divisor).length(); i++)
+//        for (int i = 1; i < String.valueOf(divisor).length(); i++)
             position++;
     }
 
