@@ -9,40 +9,33 @@ public class Divider {
     private int dividend;
     private int divisor;
     private boolean secondBlockWritten;
-    private String firstLineToLog;
     private int position;
 
     public int division(int dividend, int divisor) {
         if (divisor == 0) {
             throw new IllegalArgumentException("Argument 'divisor' is 0!");
         }
-
         boolean positive = isPositiveResult(dividend, divisor);
-        printFirstLine(dividend, divisor);
         this.dividend = dividend;
         this.divisor = divisor;
 
+        printFirstLine(dividend, divisor);
         int result = divide(dividend, divisor);
         printDetails(0, dividend % divisor);
-
         if (positive)
             return result;
         return -result;
     }
 
     private boolean isPositiveResult(int dividend, int divisor) {
-        if ((dividend >= 0 && divisor > 0) || (dividend <= 0 && divisor < 0)) {
-            return true;
-        }
-        return false;
+        return ((dividend >= 0 && divisor > 0) || (dividend <= 0 && divisor < 0));
     }
 
     private int divide(int dividend, int divisor) {
         StringBuilder result = new StringBuilder();
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
-        char ch = String.valueOf(dividend).charAt(0);
-        int numberToDiv = Integer.valueOf(String.valueOf(ch));
+        int numberToDiv = String.valueOf(dividend).charAt(0) - '0';
         int charIndex = 1;
         int dividendLength = String.valueOf(dividend).length();
 
@@ -52,21 +45,18 @@ public class Divider {
             charIndex++;
         }
 
-        int divisionResult = numberToDiv / divisor;
-        result.append(divisionResult);
+        int quotient = numberToDiv / divisor;
+        result.append(quotient);
         if (numberToDiv >= divisor)
-            printDetails(numberToDiv, divisionResult * divisor);
-
+            printDetails(numberToDiv, quotient * divisor);
         int remainder = numberToDiv % divisor;
         if (charIndex < dividendLength) {
             if (remainder != 0) {
-                String reminder = Integer.toString(remainder);
-                String substringToDivide = String.valueOf(dividend).substring(charIndex);
-                String stringToDivide = reminder + substringToDivide;
-
-                dividend = Integer.valueOf(stringToDivide);
+                String subDividend = "" + remainder;
+                subDividend = subDividend + String.valueOf(dividend).substring(charIndex);
+                dividend = Integer.valueOf(subDividend);
                 result.append(divide(dividend, divisor));
-            } else if (charIndex < dividendLength) {
+            } else {
                 result.append(divide(Integer.valueOf(String.valueOf(dividend).substring(charIndex)), divisor));
             }
         }
@@ -81,7 +71,6 @@ public class Divider {
     private void printDetails(int numberToDiv, int dividend) {
         if (!secondBlockWritten) {
             printSecondAndThirdLine(dividend);
-            return;
         } else if (numberToDiv == 0) {
             StringBuilder freeSpaces = getSpacesBeforePosition(position);
             StringBuilder remainder = new StringBuilder();
@@ -113,7 +102,7 @@ public class Divider {
     }
 
     private void printFirstLine(int dividend, int divisor) {
-        firstLineToLog = UNDERSCORE + dividend + PIPE + divisor;
+        String firstLineToLog = UNDERSCORE + dividend + PIPE + divisor;
         position = getStartPosition(firstLineToLog);
         System.out.println(firstLineToLog);
     }
