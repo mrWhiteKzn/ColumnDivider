@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Divider divider = new Divider();
         int dividend = -78945 ;
-        int divisor = 4;
-        divider.division(dividend,divisor);
+        int divisor = 400000;
+        divider.showDivision(dividend,divisor);
     }
 }
