@@ -13,13 +13,15 @@ public class Divider {
 
         int quotient = dividend / divisor;
         int remainder = dividend % divisor;
+
+        int absDividend = Math.abs(dividend);
+        int absDivisor = Math.abs(divisor);
+
         String sQuotient = String.valueOf(quotient);
         String sRemainder = String.valueOf(remainder);
         String sDividend = UNDERSCORE + String.valueOf(dividend);
         String sDivisor = String.valueOf(divisor);
-
-        int absDividend = Math.abs(dividend);
-        int absDivisor = Math.abs(divisor);
+        int dividendLength = String.valueOf(dividend).length();
 
         StringBuilder log = new StringBuilder();
         if (absDividend < absDivisor) {
@@ -34,7 +36,73 @@ public class Divider {
             System.out.println(log);
         }
 
-        return positive ? 0 : -0;
+        log.append(UNDERSCORE + dividend + PIPE + divisor + "\n");
+        boolean isFirst = true;
+        int multiplicand = 1;
+        int tempDiv = dividend;
+        int index;
+
+        for (index = 1; index < sQuotient.length(); index++){
+            multiplicand *=10;
+        }
+            for (index = 1; index <= sQuotient.length(); index++, isFirst = false, multiplicand /= 10) {
+                int rightSpaces = sQuotient.length() - index; // ?
+                int digit = Integer.parseInt(sQuotient.substring(index - 1, index));
+                int subtrahend = digit * divisor;
+                if (digit != 0) {
+
+                    // уменьшаемое
+                    String sSubtrahend = String.valueOf(subtrahend);
+                    String sMinuend;
+
+                    if (isFirst) {
+                        sMinuend = "";
+                    } else {
+                        sMinuend = String.valueOf(tempDiv);
+                        sMinuend = sMinuend.substring(0, sMinuend.length() - rightSpaces);
+                    }
+                    int minuendLeftSpaces = isFirst ? 0 : dividendLength - rightSpaces - sMinuend.length();
+
+                    if (!isFirst) {
+                        log.append(SPACE);
+                        append(log, SPACE, minuendLeftSpaces);
+                        log.append(sMinuend);
+                        append(log, SPACE, rightSpaces);
+                        log.append("\n");
+                    }
+
+                    // вычитаемое
+                    int subtrahendLeftSpaces = dividendLength - rightSpaces - sSubtrahend.length();
+                    append(log, SPACE, subtrahendLeftSpaces);
+                    log.append(MINUS).append(subtrahend);
+                    append(log, SPACE, rightSpaces);
+                    if (isFirst) {
+                        log.append(PIPE + "--");
+                        append(log, MINUS, dividendLength);
+                    }
+                    log.append("\n");
+
+                    log.append(SPACE);
+                    append(log, SPACE, minuendLeftSpaces);
+                    int limit = isFirst ? dividendLength - rightSpaces : sMinuend.length();
+                    append(log, MINUS, limit);
+                    append(log, SPACE, rightSpaces);
+
+                    if (isFirst) {
+                        log.append(PIPE).append(sQuotient);
+                    }
+                    log.append('\n');
+                }
+                tempDiv -= subtrahend * multiplicand;
+            }
+
+        log.append(SPACE);
+        index = dividendLength - sRemainder.length();
+        append(log, SPACE, index);
+        log.append(sRemainder);
+        System.out.println(log);
+
+        return positive ? quotient : -quotient;
     }
 
     private void append(StringBuilder log, String delimiter, int length) {
