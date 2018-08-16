@@ -46,7 +46,7 @@ public class Divider {
             multiplicand *= 10;
         }
         for (index = 1; index <= sQuotient.length(); index++, isBlockInfo = false, multiplicand /= 10) {
-            int rightSpaces = sQuotient.length() - index; // ?
+            int rightSpaces = sQuotient.length() - index;
             int digit = Integer.parseInt(sQuotient.substring(index - 1, index));
             int subtrahend = digit * absDivisor;
             if (digit != 0) {
@@ -62,8 +62,8 @@ public class Divider {
                 }
                 int minuendLeftSpaces = isBlockInfo ? 0 : dividendLength - rightSpaces - sMinuend.length();
                 if (!isBlockInfo) {
-                    log.append(SPACE);
                     append(log, SPACE, minuendLeftSpaces);
+                    log.append(UNDERSCORE);
                     log.append(sMinuend);
                     append(log, SPACE, rightSpaces);
                     log.append("\n");
@@ -71,18 +71,17 @@ public class Divider {
 
                 int subtrahendLeftSpaces = dividendLength - rightSpaces - sSubtrahend.length();
                 append(log, SPACE, subtrahendLeftSpaces);
-                log.append(MINUS).append(subtrahend);
+                log.append(SPACE).append(subtrahend);
                 append(log, SPACE, rightSpaces);
                 if (isBlockInfo) {
-                    log.append(PIPE + "--");
+                    log.append(PIPE);
                     append(log, MINUS, dividendLength);
                 }
                 log.append("\n");
-
                 log.append(SPACE);
                 append(log, SPACE, minuendLeftSpaces);
 
-                int tempDivLength = String.valueOf(Math.abs(tempDiv)).length();
+                int tempDivLength = String.valueOf(tempDiv).length();
                 int limit = isBlockInfo ? tempDivLength - rightSpaces : sMinuend.length();
                 append(log, MINUS, limit);
                 append(log, SPACE, rightSpaces);
@@ -96,13 +95,12 @@ public class Divider {
             }
             tempDiv -= subtrahend * multiplicand;
         }
-
         log.append(SPACE);
         index = dividendLength - sRemainder.length();
         append(log, SPACE, index);
         log.append(sRemainder);
-        System.out.println(log);
 
+        System.out.println(log);
         return quotient;
     }
 
