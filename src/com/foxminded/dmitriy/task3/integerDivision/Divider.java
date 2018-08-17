@@ -7,13 +7,14 @@ public class Divider {
     private static final String UNDERSCORE = "_";
     private static final int MAX_DECIMAL = 9;
     private static final int MULTIPLIER = 10;
+    private static final int START_POSITION = 1;
 
     public String showDivision(int dividend, int divisor) {
         if (divisor == 0)
             throw new IllegalArgumentException("Argument divisor = '0'!");
 
         StringBuilder result = new StringBuilder();
-        int rank = 1;   // "1" нужно выводить в static final int startPosition? или это усложнит?
+        int rank = START_POSITION;
         int remainder;
 
         while ((dividend / divisor) > MAX_DECIMAL) {
