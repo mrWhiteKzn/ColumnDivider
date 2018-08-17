@@ -10,9 +10,9 @@ public class Divider {
         if (divisor == 0)
             throw new IllegalArgumentException("Argument divisor = '0'!");
 
-        StringBuilder sbResult = new StringBuilder();
-        StringBuilder log = new StringBuilder().append(UNDERSCORE + dividend + PIPE + divisor + "\n");
-        appendSecondLine(log, dividend, divisor);
+        StringBuilder result = new StringBuilder().append(UNDERSCORE + dividend + PIPE + divisor + "\n");
+        appendSecondLine(result, dividend, divisor);
+        StringBuilder quotient = new StringBuilder();
 
         boolean positive = isPositive(dividend, divisor);
         dividend = Math.abs(dividend);
@@ -25,33 +25,33 @@ public class Divider {
             multiplier *= 10;
         }
         remainder = dividend % divisor;
-        sbResult.append(dividend / divisor);
+        quotient.append(dividend / divisor);
 
         while (multiplier != 1) {
             dividend = remainder;
             divisor /= 10;
             multiplier /= 10;
-            sbResult.append(dividend / divisor);
+            quotient.append(dividend / divisor);
             remainder = dividend % divisor;
         }
-        int result = Integer.valueOf(sbResult.toString());
-        System.out.println(log);
-        return positive ? result : -result;
+        int divResult = Integer.valueOf(quotient.toString());
+        System.out.println(result);
+        return positive ? divResult : -divResult;
     }
 
-    private void appendSecondLine(StringBuilder log, int dividend, int divisor) {
-        int result = dividend / divisor;
+    private void appendSecondLine(StringBuilder result, int dividend, int divisor) {
+        int divResult = dividend / divisor;
         String sDividend = String.valueOf(dividend);
-        int rightSpaces = String.valueOf(result).length() - 1;
+        int rightSpaces = String.valueOf(divResult).length() - 1;
         int leftSpaces = sDividend.length() - rightSpaces - String.valueOf(divisor).length();
 
-        log.append(SPACE);
-        append(log, SPACE, leftSpaces);
-        log.append(divisor);
-        append(log, SPACE, rightSpaces);
-        log.append(PIPE);
-        for (int i = 0; i < String.valueOf(result).length(); i++)
-            log.append(MINUS);
+        result.append(SPACE);
+        append(result, SPACE, leftSpaces);
+        result.append(divisor);
+        append(result, SPACE, rightSpaces);
+        result.append(PIPE);
+        for (int i = 0; i < String.valueOf(divResult).length(); i++)
+            result.append(MINUS);
     }
 
     private void append(StringBuilder log, String symbol, int length) {
