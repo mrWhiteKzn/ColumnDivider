@@ -24,7 +24,7 @@ public class Divider {
         result.append(dividend / divisor);
         remainder = dividend % divisor;
 
-        while (rank != 1) {
+        while (rank != START_POSITION) {
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             dividend = remainder;
