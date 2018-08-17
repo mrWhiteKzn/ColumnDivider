@@ -6,7 +6,7 @@ public class Main {
         int dividend = 1234;
         int divisor = 2;
 
-        int result = divider.showDivision(dividend,divisor);
+        String result = divider.showDivision(dividend,divisor);
         System.out.println(result);
     }
 }
