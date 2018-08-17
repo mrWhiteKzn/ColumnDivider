@@ -15,26 +15,20 @@ public class Divider {
 
         StringBuilder result = new StringBuilder();
         int rank = START_POSITION;
-        int remainder;
-        StringBuilder sb = new StringBuilder();
-        
-        // первая строка
         int divResult = dividend / divisor;
-        System.out.println(UNDERSCORE + dividend + PIPE + divisor);
-        //
+        int tmpDividend = dividend;
+        int remainder;
+        boolean first = true;
 
-        // service
-        int didivend2 = dividend;
+        result.append(formFirstLine(dividend, divisor));
 
         while ((dividend / divisor) > MAX_DECIMAL) {
             divisor *= MULTIPLIER;
             rank *= MULTIPLIER;
         }
-//        result.append(dividend / divisor);
         remainder = dividend % divisor;
 
         // вывод
-
         int dividendLen = String.valueOf(UNDERSCORE + dividend).length();
         int index = 1;
         int rightSpaces = String.valueOf(divResult).length() - index;
@@ -42,22 +36,18 @@ public class Divider {
         int subtrahend = divisor / rank * digit;
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
 
-        append(sb, SPACE, leftSpaces);
-        sb.append(subtrahend);
-        append(sb, SPACE, rightSpaces);
-        sb.append(PIPE);
+        append(result, SPACE, leftSpaces);
+        result.append(subtrahend);
+        append(result, SPACE, rightSpaces);
+        result.append(PIPE);
 
         for (int i = 0; i < String.valueOf(divResult).length(); i++) {
-            sb.append(MINUS);
+            result.append(MINUS);
         }
-        sb.append("\n");
-        //
-        // service
-//        didivend2 -= subtrahend * rank;
-        boolean first = true;
+        result.append("\n");
 
         while (rank != START_POSITION) {
-            didivend2 -= subtrahend * rank;
+            tmpDividend -= subtrahend * rank;
             digit = Integer.valueOf(String.valueOf(divResult).charAt(index) - '0');
             index++;
             rightSpaces = String.valueOf(divResult).length() - index;
@@ -65,35 +55,37 @@ public class Divider {
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             dividend = remainder;
-//            result.append(dividend / divisor);
             remainder = dividend % divisor;
 
             // вывод
-            String sMinuend = String.valueOf(didivend2);
+            String sMinuend = String.valueOf(tmpDividend);
             sMinuend = sMinuend.substring(0, sMinuend.length() - rightSpaces);
             leftSpaces = dividendLen - rightSpaces - sMinuend.length()-1;
-            append(sb, SPACE, leftSpaces);
-            sb.append(UNDERSCORE).append(sMinuend);
-            append(sb,SPACE, rightSpaces);
+            append(result, SPACE, leftSpaces);
+            result.append(UNDERSCORE).append(sMinuend);
+            append(result,SPACE, rightSpaces);
             if(first){
-                sb.append(PIPE).append(divResult);
+                result.append(PIPE).append(divResult);
                 first = false;
             }
-            sb.append("\n");
+            result.append("\n");
 
             subtrahend = divisor / rank * digit;
             int subtrahendLeftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-            append(sb, SPACE, subtrahendLeftSpaces);
-            sb.append(subtrahend);
-            sb.append("\n");
+            append(result, SPACE, subtrahendLeftSpaces);
+            result.append(subtrahend);
+            result.append("\n");
             //
         }
 
         index = dividendLen - String.valueOf(remainder).length();
-        append(sb, SPACE, index);
-        sb.append(remainder);
-        System.out.println(sb);
+        append(result, SPACE, index);
+        result.append(remainder);
         return result.toString();
+    }
+
+    private String formFirstLine(int dividend, int divisor) {
+        return UNDERSCORE + dividend + PIPE + divisor + "\n";
     }
 
     private void append(StringBuilder sb, String symbol, int count) {
