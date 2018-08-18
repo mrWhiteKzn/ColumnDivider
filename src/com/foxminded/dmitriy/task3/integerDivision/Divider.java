@@ -18,8 +18,8 @@ public class Divider {
         int divResult = dividend / divisor;
         int tmpDividend = dividend;
         int remainder;
-        String sDivResult = String.valueOf(divResult);
         boolean first = true;
+        String sDivResult = String.valueOf(divResult);
         result.append(getFirstLine(dividend, divisor));
 
         while ((dividend / divisor) > MAX_DECIMAL) {
@@ -34,9 +34,7 @@ public class Divider {
         int digit = sDivResult.charAt(0) - '0';
         int subtrahend = divisor / rank * digit;
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-
-        String str = getSecondLine(leftSpaces, subtrahend, rightSpaces).concat(getDelimiters(sDivResult.length()));
-        result.append(str);
+        result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces).concat(getDelimiters(sDivResult.length())));
 
         while (rank != START_POSITION) {
             tmpDividend -= subtrahend * rank;
@@ -50,7 +48,7 @@ public class Divider {
             result.append(getMinuendLine(tmpDividend, rightSpaces, dividendLen));
 
             if (first) {
-                result.append(PIPE).append(divResult);
+                result.append(join(rightSpaces)).append(PIPE).append(divResult);
                 first = false;
             }
             subtrahend = divisor / rank * digit;
@@ -65,7 +63,7 @@ public class Divider {
     }
 
     private String getSecondLine(int leftSpaces, int subtrahend, int rightSpaces) {
-        return "".concat(get(leftSpaces)).concat(String.valueOf(subtrahend)).concat(get(rightSpaces)).concat(PIPE);
+        return join(leftSpaces).concat(String.valueOf(subtrahend)).concat(join(rightSpaces)).concat(PIPE);
     }
 
     private String getDelimiters(int count) {
@@ -74,22 +72,22 @@ public class Divider {
 
     private String getSubtrahendLine(int subtrahend, int dividendLen, int rightSpaces) {
         int subtrahendLeftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-        return "".concat(get(subtrahendLeftSpaces)).concat(String.valueOf(subtrahend)).concat("\n");
+        return join(subtrahendLeftSpaces).concat(String.valueOf(subtrahend)).concat("\n");
     }
 
     private String getMinuendLine(int tmpDividend, int rightSpaces, int dividendLen) {
         String sMinuend = String.valueOf(tmpDividend);
         sMinuend = sMinuend.substring(0, sMinuend.length() - rightSpaces);
         int leftSpaces = dividendLen - rightSpaces - sMinuend.length() - 1;
-        return "".concat(get(leftSpaces)).concat(UNDERSCORE).concat(sMinuend).concat(get(rightSpaces));
+        return join(leftSpaces).concat(UNDERSCORE).concat(sMinuend);
     }
 
     private String getRemainderLine(int remainder, int dividendLen) {
         int leftSpaces = dividendLen - String.valueOf(remainder).length();
-        return "".concat(get(leftSpaces)).concat(String.valueOf(remainder));
+        return join(leftSpaces).concat(String.valueOf(remainder));
     }
 
-    private String get(int count) {
+    private String join(int count) {
         return new String(new char[count]).replace('\0', SPACE_CHAR);
     }
 }
