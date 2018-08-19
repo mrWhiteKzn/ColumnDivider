@@ -16,11 +16,13 @@ public class Divider {
         StringBuilder result = new StringBuilder();
         int rank = START_POSITION;
         int divResult = dividend / divisor;
-        int tmpDividend = dividend;
         int remainder;
         boolean first = true;
-        String sDivResult = String.valueOf(divResult);
+        int dividendLen = String.valueOf(UNDERSCORE + dividend).length();
         result.append(getFirstLine(dividend, divisor));
+        dividend = Math.abs(dividend);
+        divisor = Math.abs(divisor);
+        String sDivResult = String.valueOf(Math.abs(divResult));
 
         while ((dividend / divisor) > MAX_DECIMAL) {
             divisor *= MULTIPLIER;
@@ -28,24 +30,23 @@ public class Divider {
         }
         remainder = dividend % divisor;
 
-        int dividendLen = String.valueOf(UNDERSCORE + dividend).length();
         int index = 1;
-        int rightSpaces = sDivResult.length() - index;
         int digit = sDivResult.charAt(0) - '0';
         int subtrahend = divisor / rank * digit;
+        int rightSpaces = sDivResult.length() - index;
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-        result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces).concat(getDelimiters(sDivResult.length())));
+        result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces));
+        result.append(getDelimiters(String.valueOf(divResult).length()));
 
         while (rank != START_POSITION) {
-            tmpDividend -= subtrahend * rank;
+            dividend -= subtrahend * rank;
             digit = sDivResult.charAt(index) - '0';
             rightSpaces = sDivResult.length() - ++index;
 
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
-            dividend = remainder;
             remainder = dividend % divisor;
-            result.append(getMinuendLine(tmpDividend, rightSpaces, dividendLen));
+            result.append(getMinuendLine(dividend, rightSpaces, dividendLen));
 
             if (first) {
                 result.append(join(rightSpaces)).append(PIPE).append(divResult);
