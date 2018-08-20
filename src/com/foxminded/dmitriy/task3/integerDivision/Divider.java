@@ -27,7 +27,6 @@ public class Divider {
             divisor *= MULTIPLIER;
             rank *= MULTIPLIER;
         }
-
         int index = 1;
         int digit = sDivResult.charAt(0) - '0';
         int subtrahend = divisor / rank * digit;
@@ -46,11 +45,12 @@ public class Divider {
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             remainder = dividend % divisor;
-            if (dividend == 0 || (rank == START_POSITION && remainder < divisor)) break;
-            result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
-
-            subtrahend = divisor / rank * digit;
-            result.append("\n" + getSubtrahendLine(subtrahend, dividendLen, rightSpaces));
+            if (dividend > divisor) {
+                result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
+                subtrahend = divisor / rank * digit;
+                result.append("\n" + getSubtrahendLine(subtrahend, dividendLen, rightSpaces));
+            } else
+                subtrahend = divisor / rank * digit;
         }
         result.append("\n").append(getRemainderLine(remainder, dividendLen));
         return result.toString();

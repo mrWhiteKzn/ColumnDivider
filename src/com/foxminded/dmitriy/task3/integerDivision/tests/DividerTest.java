@@ -173,4 +173,20 @@ public class DividerTest {
                             "   0";
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void whenDivideAndSomeMinuendEqualsSubtrahend(){
+        String actual = divider.showDivision(42654, 7);
+        String expected =   "_42654|7\n" +
+                            " 42   |----\n" +
+                            " --   |6093\n" +
+                            "  _65\n" +
+                            "   63\n" +
+                            "   --\n" +
+                            "   _24\n" +
+                            "    21\n" +
+                            "    --\n" +
+                            "     3";
+        assertEquals(expected, actual);
+    }
 }
