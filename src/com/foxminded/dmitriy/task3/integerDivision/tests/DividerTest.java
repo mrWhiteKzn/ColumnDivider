@@ -154,13 +154,23 @@ public class DividerTest {
         assertEquals(expected, actual);
     }
 
-     @Test
+    @Test
     public void whenDivideAndDivisorTheSame(){
         String actual = divider.showDivision(10, 10);
         String expected =   "_10|10\n" +
                             " 10|-\n" +
                             " --|1\n" +
                             "  0";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void whenDivisorIsOne(){
+        String actual = divider.showDivision(100, 1);
+        String expected =   "_100|1\n" +
+                            " 1  |---\n" +
+                            " -  |100\n" +
+                            "   0";
         assertEquals(expected, actual);
     }
 }
