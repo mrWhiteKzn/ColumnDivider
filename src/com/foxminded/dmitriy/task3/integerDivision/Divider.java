@@ -45,12 +45,11 @@ public class Divider {
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             remainder = dividend % divisor;
+            subtrahend = divisor / rank * digit;
             if (dividend > divisor) {
                 result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
-                subtrahend = divisor / rank * digit;
                 result.append("\n" + getSubtrahendLine(subtrahend, dividendLen, rightSpaces));
-            } else
-                subtrahend = divisor / rank * digit;
+            }
         }
         result.append("\n").append(getRemainderLine(remainder, dividendLen));
         return result.toString();
