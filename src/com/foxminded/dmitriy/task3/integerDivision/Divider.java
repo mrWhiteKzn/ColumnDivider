@@ -16,7 +16,7 @@ public class Divider {
         StringBuilder result = new StringBuilder();
         int rank = START_POSITION;
         int divResult = dividend / divisor;
-        int remainder;
+        int remainder = dividend % divisor;
         int dividendLen = String.valueOf(UNDERSCORE + dividend).length();
         result.append(getFirstLine(dividend, divisor));
         dividend = Math.abs(dividend);
@@ -27,7 +27,6 @@ public class Divider {
             divisor *= MULTIPLIER;
             rank *= MULTIPLIER;
         }
-        remainder = dividend % divisor;
 
         int index = 1;
         int digit = sDivResult.charAt(0) - '0';
