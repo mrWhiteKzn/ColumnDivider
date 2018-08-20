@@ -46,7 +46,7 @@ public class Divider {
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             remainder = dividend % divisor;
-            if (dividend == 0) break;
+            if (dividend == 0 || (rank == START_POSITION && remainder < divisor)) break;
             result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
 
             subtrahend = divisor / rank * digit;
