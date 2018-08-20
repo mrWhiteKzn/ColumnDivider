@@ -28,7 +28,7 @@ public class Divider {
             rank *= MULTIPLIER;
         }
         int index = 1;
-        int digit = sDivResult.charAt(0) - '0';
+        int digit = Character.getNumericValue(sDivResult.charAt(0));
         int subtrahend = divisor / rank * digit;
         int rightSpaces = sDivResult.length() - index;
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
@@ -39,9 +39,8 @@ public class Divider {
 
         while (rank != START_POSITION) {
             dividend -= subtrahend * rank;
-            digit = sDivResult.charAt(index) - '0';
+            digit = Character.getNumericValue(sDivResult.charAt(index));
             rightSpaces = sDivResult.length() - ++index;
-
             divisor /= MULTIPLIER;
             rank /= MULTIPLIER;
             remainder = dividend % divisor;
