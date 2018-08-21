@@ -9,19 +9,25 @@ public class Divider {
     private static final int MULTIPLIER = 10;
     private static final int START_POSITION = 1;
 
-    public String showDivision(int dividend, int divisor) {
+    public static DivisionData divide(int dividend, int divisor) {
         if (divisor == 0)
             throw new IllegalArgumentException("Argument divisor = '0'!");
+
+        DivisionData data = new DivisionData();
+        data.setDividend(dividend);
+        data.setDivisor(divisor);
+        data.setResult(dividend/divisor);
 
         StringBuilder result = new StringBuilder();
         int rank = START_POSITION;
         int divResult = dividend / divisor;
         int remainder = dividend % divisor;
         int dividendLen = String.valueOf(UNDERSCORE + dividend).length();
-        result.append(getFirstLine(dividend, divisor));
+//        result.append(getFirstLine(dividend, divisor));
         dividend = Math.abs(dividend);
         divisor = Math.abs(divisor);
         String sDivResult = String.valueOf(Math.abs(divResult));
+
 
         while ((dividend / divisor) > MAX_DECIMAL) {
             divisor *= MULTIPLIER;
@@ -30,11 +36,14 @@ public class Divider {
         int index = 1;
         int digit = Character.getNumericValue(sDivResult.charAt(0));
         int subtrahend = divisor / rank * digit;
+
+        data.addSubtrahend(subtrahend);
+
         int rightSpaces = sDivResult.length() - index;
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-        result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces));
-        result.append(getDelimiters(String.valueOf(divResult).length())).append("\n");
-        result.append(getThirdLine(leftSpaces, String.valueOf(subtrahend).length(), rightSpaces));
+//        result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces));
+//        result.append(getDelimiters(String.valueOf(divResult).length())).append("\n");
+//        result.append(getThirdLine(leftSpaces, String.valueOf(subtrahend).length(), rightSpaces));
         result.append(PIPE).append(divResult);
 
         while (rank != START_POSITION) {
@@ -45,13 +54,22 @@ public class Divider {
             rank /= MULTIPLIER;
             remainder = dividend % divisor;
             subtrahend = divisor / rank * digit;
+
+            String sMinuend = String.valueOf(dividend);
+            sMinuend = sMinuend.substring(0, sMinuend.length() - rightSpaces);
+            int minuend = Integer.parseInt(sMinuend);
+
             if (dividend > divisor) {
-                result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
-                result.append("\n" + getSubtrahendLine(subtrahend, dividendLen, rightSpaces));
+//                result.append("\n").append(getMinuendLine(dividend, rightSpaces, dividendLen));
+//                result.append("\n" + getSubtrahendLine(subtrahend, dividendLen, rightSpaces));
             }
+            data.addSubtrahend(subtrahend);
+            data.addMinuend(minuend);
+
         }
-        result.append("\n").append(getRemainderLine(remainder, dividendLen));
-        return result.toString();
+//        result.append("\n").append(getRemainderLine(remainder, dividendLen));
+        data.setRemainder(remainder);
+        return data;
     }
 
     private String getFirstLine(int dividend, int divisor) {

@@ -2,10 +2,8 @@ package com.foxminded.dmitriy.task3.integerDivision;
 
 public class Main {
     public static void main(String[] args) {
-        Divider divider = new Divider();
-        int dividend = 42654;
-        int divisor = 7;
-
-        System.out.println(divider.showDivision(dividend,divisor));
+        DivisionData divisionData = Divider.divide(42654,7);
+        String result = ColumnFormatter.format(divisionData);
+        System.out.println(result);
     }
 }
