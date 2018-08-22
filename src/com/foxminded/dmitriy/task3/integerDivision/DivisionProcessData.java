@@ -3,7 +3,7 @@ package com.foxminded.dmitriy.task3.integerDivision;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class DivisionData {
+public class DivisionProcessData {
     private int dividend;
     private int divisor;
     private int result;
@@ -11,7 +11,7 @@ public class DivisionData {
     private Deque<Integer> minuendList;
     private Deque<Integer> subtrahendList;
 
-    public DivisionData() {
+    public DivisionProcessData() {
         this.minuendList = new LinkedList<>();
         this.subtrahendList = new LinkedList<>();
     }
