@@ -21,8 +21,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideWithOneDigitDivisor(){
-        data = Divider.divide(78945,4);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(78945,4);
+        String actual = formatter.format(data);
         String expected =   "_78945|4\n" +
                             " 4    |-----\n" +
                             " -    |19736\n" +
@@ -44,8 +44,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideWithTwoDigitDivisor(){
-        data = Divider.divide(78945,14);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(78945,14);
+        String actual = formatter.format(data);
         String expected =   "_78945|14\n" +
                             " 70   |----\n" +
                             " --   |5638\n" +
@@ -64,14 +64,14 @@ public class DividerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenDivideWithZeroDivisor(){
-        data = Divider.divide(554646,0);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(554646,0);
+        String actual = formatter.format(data);
     }
 
     @Test
     public void whenDivideWithOneDigitNegativeDivisor(){
-        data = Divider.divide(46654,-4);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(46654,-4);
+        String actual = formatter.format(data);
         String expected =   "_46654|-4\n" +
                             " 4    |------\n" +
                             " -    |-11663\n" +
@@ -93,8 +93,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideWithTwoDigitNegativeDivisor(){
-        data = Divider.divide(46654,-14);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(46654,-14);
+        String actual = formatter.format(data);
         String expected =   "_46654|-14\n" +
                             " 42   |-----\n" +
                             " --   |-3332\n" +
@@ -113,8 +113,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideWitNegativeDividendAndPositiveDivisor(){
-        data = Divider.divide(-48224,7);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(-48224,7);
+        String actual = formatter.format(data);
         String expected =   "_-48224|7\n" +
                             "  42   |-----\n" +
                             "  --   |-6889\n" +
@@ -133,8 +133,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideDividendAndDivisorBothNegative(){
-        data = Divider.divide(-3899,-3);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(-3899,-3);
+        String actual = formatter.format(data);
         String expected =   "_-3899|-3\n" +
                             "  3   |----\n" +
                             "  -   |1299\n" +
@@ -153,8 +153,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideTwoDigitDivisorAndDividendBothNegative(){
-        data = Divider.divide(-3899,-30);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(-3899,-30);
+        String actual = formatter.format(data);
         String expected =   "_-3899|-30\n" +
                             "  30  |---\n" +
                             "  --  |129\n" +
@@ -170,8 +170,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideAndDivisorTheSame(){
-        data = Divider.divide(10,10);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(10,10);
+        String actual = formatter.format(data);
         String expected =   "_10|10\n" +
                             " 10|-\n" +
                             " --|1\n" +
@@ -181,8 +181,8 @@ public class DividerTest {
 
     @Test
     public void whenDivisorIsOne(){
-        data = Divider.divide(100,1);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(100,1);
+        String actual = formatter.format(data);
         String expected =   "_100|1\n" +
                             " 1  |---\n" +
                             " -  |100\n" +
@@ -192,8 +192,8 @@ public class DividerTest {
 
     @Test
     public void whenDivideAndSomeMinuendEqualsSubtrahend(){
-        data = Divider.divide(42654,7);
-        String actual = ColumnFormatter.format(data);
+        data = divider.divide(42654,7);
+        String actual = formatter.format(data);
         String expected =   "_42654|7\n" +
                             " 42   |----\n" +
                             " --   |6093\n" +
