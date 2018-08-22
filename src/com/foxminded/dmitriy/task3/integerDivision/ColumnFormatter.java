@@ -37,14 +37,20 @@ public class ColumnFormatter {
         return result.toString();
     }
 
-    private String getReminderLine(int remainder, int dividendLen) {
-        return "\n".concat(join(dividendLen - String.valueOf(remainder).length())).concat(String.valueOf(remainder));
+    private String getFirstLine(int dividend, int divisor) {
+        return UNDERSCORE + dividend + PIPE + divisor + "\n";
     }
 
-    private String getSubtrahendLine(int subtrahend, int rightSpaces, int dividendLen) {
-        int subtrahendLeftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-        return join(subtrahendLeftSpaces).concat(String.valueOf(subtrahend)).concat("\n")
-                .concat(join(subtrahendLeftSpaces).concat(getDelimiters(String.valueOf(subtrahend).length())));
+    private String getSecondLine(int leftSpaces, int subtrahend, int rightSpaces) {
+        return join(leftSpaces).concat(String.valueOf(subtrahend)).concat(join(rightSpaces)).concat(PIPE);
+    }
+
+    private String getThirdLine(int leftSpaces, int length, int rightSpaces) {
+        return join(leftSpaces).concat(getDelimiters(length)).concat(join(rightSpaces));
+    }
+
+    private String getReminderLine(int remainder, int dividendLen) {
+        return "\n".concat(join(dividendLen - String.valueOf(remainder).length()))+remainder;
     }
 
     private String getMinuendLine(int minuend, int rightSpaces, int dividendLen) {
@@ -52,16 +58,10 @@ public class ColumnFormatter {
         return join(leftSpaces).concat(UNDERSCORE).concat(String.valueOf(minuend));
     }
 
-    private String getThirdLine(int leftSpaces, int length, int rightSpaces) {
-        return join(leftSpaces).concat(getDelimiters(length)).concat(join(rightSpaces));
-    }
-
-    private String getSecondLine(int leftSpaces, int subtrahend, int rightSpaces) {
-        return join(leftSpaces).concat(String.valueOf(subtrahend)).concat(join(rightSpaces)).concat(PIPE);
-    }
-
-    private String getFirstLine(int dividend, int divisor) {
-        return UNDERSCORE + dividend + PIPE + divisor + "\n";
+    private String getSubtrahendLine(int subtrahend, int rightSpaces, int dividendLen) {
+        int subtrahendLeftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
+        return join(subtrahendLeftSpaces).concat(String.valueOf(subtrahend)).concat("\n")
+                .concat(join(subtrahendLeftSpaces).concat(getDelimiters(String.valueOf(subtrahend).length())));
     }
 
     private String getDelimiters(int count) {
