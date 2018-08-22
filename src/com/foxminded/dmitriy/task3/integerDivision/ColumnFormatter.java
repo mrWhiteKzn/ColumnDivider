@@ -9,27 +9,27 @@ public class ColumnFormatter {
 
     public static String format(DivisionProcessData data) {
         StringBuilder result = new StringBuilder();
-        boolean first = true;
+        boolean infoPart = true;
         int index = START_POSITION;
         int leftSpaces = START_POSITION;
         int rightSpaces;
         int dividendLen = String.valueOf(UNDERSCORE + data.getDividend()).length();
         int resultLen = String.valueOf(Math.abs(data.getResult())).length();
 
-        result.append(getFirstLine(data.getDividend(), data.getDivisor()));
         while (!data.getSubtrahendList().isEmpty()) {
             int subtrahend = data.getSubtrahendList().removeLast();
-            int minuend = data.getMinuendList().removeLast();
             rightSpaces = resultLen - ++index;
-            if (!(subtrahend == 0)) {
-                leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
-                if (first) {
-                    result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces));
-                    result.append(getDelimiters(String.valueOf(data.getResult()).length())).append("\n");
-                    result.append(getThirdLine(leftSpaces, String.valueOf(subtrahend).length(), rightSpaces));
-                    result.append(PIPE).append(data.getResult());
-                    first = false;
-                } else {
+            leftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
+            if (infoPart) {
+                result.append(getFirstLine(data.getDividend(), data.getDivisor()));
+                result.append(getSecondLine(leftSpaces, subtrahend, rightSpaces));
+                result.append(getDelimiters(String.valueOf(data.getResult()).length())).append("\n");
+                result.append(getThirdLine(leftSpaces, String.valueOf(subtrahend).length(), rightSpaces));
+                result.append(PIPE).append(data.getResult());
+                infoPart = false;
+            } else {
+                int minuend = data.getMinuendList().removeLast();
+                if ((minuend > subtrahend && subtrahend != 0)) {
                     result.append("\n").append(getMinuendLine(minuend, rightSpaces, dividendLen));
                     result.append("\n").append(getSubtrahendLine(subtrahend, rightSpaces, dividendLen));
                 }
