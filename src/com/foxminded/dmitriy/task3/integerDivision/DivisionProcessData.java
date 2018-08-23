@@ -2,6 +2,7 @@ package com.foxminded.dmitriy.task3.integerDivision;
 
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class DivisionProcessData {
     private int dividend;
@@ -62,5 +63,24 @@ public class DivisionProcessData {
 
     public Deque<Integer> getSubtrahendList() {
         return subtrahendList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DivisionProcessData that = (DivisionProcessData) o;
+        return getDividend() == that.getDividend() &&
+                getDivisor() == that.getDivisor() &&
+                getResult() == that.getResult() &&
+                getRemainder() == that.getRemainder() &&
+                Objects.equals(getMinuendList(), that.getMinuendList()) &&
+                Objects.equals(getSubtrahendList(), that.getSubtrahendList());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getDividend(), getDivisor(), getResult(), getRemainder(), getMinuendList(), getSubtrahendList());
     }
 }

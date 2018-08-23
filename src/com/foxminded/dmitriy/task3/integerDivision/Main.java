@@ -5,7 +5,7 @@ public class Main {
         Divider divider = new Divider();
         ColumnFormatter formatter = new ColumnFormatter();
 
-        DivisionProcessData divisionProcessData = divider.divide(42654, 7);
+        DivisionProcessData divisionProcessData = divider.divide(123, 1234);
         String result = formatter.format(divisionProcessData);
 
         System.out.println(result);

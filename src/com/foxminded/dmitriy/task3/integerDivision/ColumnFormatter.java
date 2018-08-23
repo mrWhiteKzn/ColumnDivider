@@ -49,10 +49,6 @@ public class ColumnFormatter {
         return join(leftSpaces).concat(getDelimiters(length)).concat(join(rightSpaces));
     }
 
-    private String getReminderLine(int remainder, int dividendLen) {
-        return "\n".concat(join(dividendLen - String.valueOf(remainder).length()))+remainder;
-    }
-
     private String getMinuendLine(int minuend, int rightSpaces, int dividendLen) {
         int leftSpaces = dividendLen - rightSpaces - String.valueOf(minuend).length() - UNDERSCORE.length();
         return join(leftSpaces).concat(UNDERSCORE).concat(String.valueOf(minuend));
@@ -62,6 +58,10 @@ public class ColumnFormatter {
         int subtrahendLeftSpaces = dividendLen - rightSpaces - String.valueOf(subtrahend).length();
         return join(subtrahendLeftSpaces).concat(String.valueOf(subtrahend)).concat("\n")
                 .concat(join(subtrahendLeftSpaces).concat(getDelimiters(String.valueOf(subtrahend).length())));
+    }
+
+    private String getReminderLine(int remainder, int dividendLen) {
+        return "\n".concat(join(dividendLen - String.valueOf(remainder).length()))+remainder;
     }
 
     private String getDelimiters(int count) {

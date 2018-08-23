@@ -1,209 +1,132 @@
 package com.foxminded.dmitriy.task3.integerDivision.tests;
 
-import com.foxminded.dmitriy.task3.integerDivision.ColumnFormatter;
 import com.foxminded.dmitriy.task3.integerDivision.Divider;
 import com.foxminded.dmitriy.task3.integerDivision.DivisionProcessData;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
+
 
 public class DividerTest {
     private Divider divider;
-    private ColumnFormatter formatter;
-    private DivisionProcessData data;
+    private DivisionProcessData expected;
+    private DivisionProcessData actual;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         divider = new Divider();
-        formatter = new ColumnFormatter();
-        data = new DivisionProcessData();
-    }
-
-    @Test
-    public void whenDivideWithOneDigitDivisor(){
-        data = divider.divide(78945,4);
-        String actual = formatter.format(data);
-        String expected =   "_78945|4\n" +
-                            " 4    |-----\n" +
-                            " -    |19736\n" +
-                            "_38\n" +
-                            " 36\n" +
-                            " --\n" +
-                            " _29\n" +
-                            "  28\n" +
-                            "  --\n" +
-                            "  _14\n" +
-                            "   12\n" +
-                            "   --\n" +
-                            "   _25\n" +
-                            "    24\n" +
-                            "    --\n" +
-                            "     1";
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void whenDivideWithTwoDigitDivisor(){
-        data = divider.divide(78945,14);
-        String actual = formatter.format(data);
-        String expected =   "_78945|14\n" +
-                            " 70   |----\n" +
-                            " --   |5638\n" +
-                            " _89\n" +
-                            "  84\n" +
-                            "  --\n" +
-                            "  _54\n" +
-                            "   42\n" +
-                            "   --\n" +
-                            "  _125\n" +
-                            "   112\n" +
-                            "   ---\n" +
-                            "    13";
-        assertEquals(expected, actual);
+        expected = new DivisionProcessData();
+        actual = new DivisionProcessData();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenDivideWithZeroDivisor(){
-        data = divider.divide(554646,0);
-        String actual = formatter.format(data);
+    public void whenDivideWithZeroDivisor() {
+        expected = divider.divide(554646, 0);
     }
 
     @Test
-    public void whenDivideWithOneDigitNegativeDivisor(){
-        data = divider.divide(46654,-4);
-        String actual = formatter.format(data);
-        String expected =   "_46654|-4\n" +
-                            " 4    |------\n" +
-                            " -    |-11663\n" +
-                            " _6\n" +
-                            "  4\n" +
-                            "  -\n" +
-                            " _26\n" +
-                            "  24\n" +
-                            "  --\n" +
-                            "  _25\n" +
-                            "   24\n" +
-                            "   --\n" +
-                            "   _14\n" +
-                            "    12\n" +
-                            "    --\n" +
-                            "     2";
-        assertEquals(expected, actual);
+    public void whenDivideWithAllNegativeNumbers() {
+        actual = divider.divide(-664664, -15);
+
+        expected.setDividend(-664664);
+        expected.setDivisor(-15);
+        expected.setResult(44310);
+        expected.addMinuend(64);
+        expected.addMinuend(46);
+        expected.addMinuend(16);
+        expected.addMinuend(14);
+
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(45);
+        expected.addSubtrahend(15);
+        expected.addSubtrahend(0);
+        expected.setRemainder(14);
+
+        assertThat(expected, samePropertyValuesAs(actual));
     }
 
     @Test
-    public void whenDivideWithTwoDigitNegativeDivisor(){
-        data = divider.divide(46654,-14);
-        String actual = formatter.format(data);
-        String expected =   "_46654|-14\n" +
-                            " 42   |-----\n" +
-                            " --   |-3332\n" +
-                            " _46\n" +
-                            "  42\n" +
-                            "  --\n" +
-                            "  _45\n" +
-                            "   42\n" +
-                            "   --\n" +
-                            "   _34\n" +
-                            "    28\n" +
-                            "    --\n" +
-                            "     6";
-        assertEquals(expected, actual);
+    public void whenDivideWithAllPositiveNumbers() {
+        actual = divider.divide(4949994, 32);
+
+        expected.setDividend(4949994);
+        expected.setDivisor(32);
+        expected.setResult(154687);
+        expected.addMinuend(174);
+        expected.addMinuend(149);
+        expected.addMinuend(219);
+        expected.addMinuend(279);
+        expected.addMinuend(234);
+
+        expected.addSubtrahend(32);
+        expected.addSubtrahend(160);
+        expected.addSubtrahend(128);
+        expected.addSubtrahend(192);
+        expected.addSubtrahend(256);
+        expected.addSubtrahend(224);
+        expected.setRemainder(10);
+
+        assertThat(expected, samePropertyValuesAs(actual));
     }
 
     @Test
-    public void whenDivideWitNegativeDividendAndPositiveDivisor(){
-        data = divider.divide(-48224,7);
-        String actual = formatter.format(data);
-        String expected =   "_-48224|7\n" +
-                            "  42   |-----\n" +
-                            "  --   |-6889\n" +
-                            "  _62\n" +
-                            "   56\n" +
-                            "   --\n" +
-                            "   _62\n" +
-                            "    56\n" +
-                            "    --\n" +
-                            "    _64\n" +
-                            "     63\n" +
-                            "     --\n" +
-                            "      1";
-        assertEquals(expected, actual);
+    public void whenDivideWhereDividendLessThenDivisor() {
+        actual = divider.divide(123, 1234);
+
+        expected.setDividend(123);
+        expected.setDivisor(1234);
+        expected.setResult(0);
+
+        expected.addSubtrahend(0);
+        expected.setRemainder(123);
+
+        assertThat(expected, samePropertyValuesAs(actual));
     }
 
     @Test
-    public void whenDivideDividendAndDivisorBothNegative(){
-        data = divider.divide(-3899,-3);
-        String actual = formatter.format(data);
-        String expected =   "_-3899|-3\n" +
-                            "  3   |----\n" +
-                            "  -   |1299\n" +
-                            "  _8\n" +
-                            "   6\n" +
-                            "   -\n" +
-                            "  _29\n" +
-                            "   27\n" +
-                            "   --\n" +
-                            "   _29\n" +
-                            "    27\n" +
-                            "    --\n" +
-                            "     2";
-        assertEquals(expected, actual);
+    public void whenDivideAndDivisorIsNegative() {
+        actual = divider.divide(664664, -15);
+
+        expected.setDividend(664664);
+        expected.setDivisor(-15);
+        expected.setResult(-44310);
+        expected.addMinuend(64);
+        expected.addMinuend(46);
+        expected.addMinuend(16);
+        expected.addMinuend(14);
+
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(45);
+        expected.addSubtrahend(15);
+        expected.addSubtrahend(0);
+        expected.setRemainder(14);
+
+        assertThat(expected, samePropertyValuesAs(actual));
     }
 
     @Test
-    public void whenDivideTwoDigitDivisorAndDividendBothNegative(){
-        data = divider.divide(-3899,-30);
-        String actual = formatter.format(data);
-        String expected =   "_-3899|-30\n" +
-                            "  30  |---\n" +
-                            "  --  |129\n" +
-                            "  _89\n" +
-                            "   60\n" +
-                            "   --\n" +
-                            "  _299\n" +
-                            "   270\n" +
-                            "   ---\n" +
-                            "    29";
-        assertEquals(expected, actual);
-    }
+    public void whenDivideAndDividendIsNegative() {
+        actual = divider.divide(-664664, 15);
 
-    @Test
-    public void whenDivideAndDivisorTheSame(){
-        data = divider.divide(10,10);
-        String actual = formatter.format(data);
-        String expected =   "_10|10\n" +
-                            " 10|-\n" +
-                            " --|1\n" +
-                            "  0";
-        assertEquals(expected, actual);
-    }
+        expected.setDividend(-664664);
+        expected.setDivisor(15);
+        expected.setResult(-44310);
+        expected.addMinuend(64);
+        expected.addMinuend(46);
+        expected.addMinuend(16);
+        expected.addMinuend(14);
 
-    @Test
-    public void whenDivisorIsOne(){
-        data = divider.divide(100,1);
-        String actual = formatter.format(data);
-        String expected =   "_100|1\n" +
-                            " 1  |---\n" +
-                            " -  |100\n" +
-                            "   0";
-        assertEquals(expected, actual);
-    }
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(60);
+        expected.addSubtrahend(45);
+        expected.addSubtrahend(15);
+        expected.addSubtrahend(0);
+        expected.setRemainder(14);
 
-    @Test
-    public void whenDivideAndSomeMinuendEqualsSubtrahend(){
-        data = divider.divide(42654,7);
-        String actual = formatter.format(data);
-        String expected =   "_42654|7\n" +
-                            " 42   |----\n" +
-                            " --   |6093\n" +
-                            "  _65\n" +
-                            "   63\n" +
-                            "   --\n" +
-                            "   _24\n" +
-                            "    21\n" +
-                            "    --\n" +
-                            "     3";
-        assertEquals(expected, actual);
+        assertThat(expected, samePropertyValuesAs(actual));
     }
 }
